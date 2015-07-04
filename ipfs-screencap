@@ -76,7 +76,7 @@ if [ "$name" == "" ]; then
 fi
 
 log "capturing screen..."
-if [ `which portable-screencap` ]; then
+if type portable-screencap >/dev/null; then
   img=$(portable-screencap | ipfs add -q)
 elif [ -f "./portable-screencap" ]; then
   img=$(./portable-screencap | ipfs add -q)

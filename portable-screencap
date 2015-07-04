@@ -30,11 +30,14 @@ darwin_screencap() {
 }
 
 linux_screencap() {
-  if [ `which import` ]; then
+  if type import >/dev/null
+  then
     import "$1"
-  elif [ `which shutter` ]; then
+  elif type shutter >/dev/null
+  then
     shutter -e -o "$1"
-  elif [ `which scrot` ]; then
+  elif type scrot >/dev/null
+  then
     scrot "$1"
   else
     die "cannot find a supported screen capture tool

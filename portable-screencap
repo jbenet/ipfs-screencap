@@ -59,7 +59,7 @@ all_screencap() {
 }
 
 date=$(date +"%Y-%m-%dT%H:%M:%SZ")
-fpath=$(mktemp /tmp/screencap.$date.XXXXXX.png)
+fpath=$(mktemp "/tmp/screencap.$date.XXXXXX.png")
 all_screencap "$fpath" || die "capture failed"
 echo "Capture is in '$fpath'"
 

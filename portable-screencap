@@ -1,7 +1,9 @@
 #!/bin/sh
 
+USAGE="usage: $0 - take a screenshot and output to stdout, portably"
+
 usage() {
-  echo "$0 - take a screenshot and output to stdout, portably"
+  echo "$USAGE"
   exit 0
 }
 
@@ -19,9 +21,9 @@ while [ $# -gt 0 ]; do
   case "$arg" in
   -h|--help) usage ;;
   --*)
-    die "unrecognised option: '$arg'\n$usage" ;;
+    die "unrecognised option: '$arg'\n$USAGE" ;;
   *)
-    die "unrecognised argument" ;;
+    die "$0 accepts no arguments\n$USAGE" ;;
   esac
 done
 

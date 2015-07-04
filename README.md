@@ -5,7 +5,7 @@
 
 ## Install
 
-```
+```sh
 # with ipfs
 ipfs get /ipfs/QmbBFKgqxqNXta7jnh1iRHASEVVtURY4snVC4NHNSbbLy5/ipfs-screencap
 cd ipfs-screencap

@@ -5,6 +5,11 @@ usage() {
   exit 0
 }
 
+die() {
+  echo >&2 "error: $@"
+  exit 1
+}
+
 # get user options
 while [ $# -gt 0 ]; do
   # get options
@@ -20,11 +25,6 @@ while [ $# -gt 0 ]; do
     die "unrecognised argument" ;;
   esac
 done
-
-die() {
-  echo >&2 "error: $@"
-  exit 1
-}
 
 darwin_screencap() {
   screencapture -i "$1"

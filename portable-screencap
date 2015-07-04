@@ -50,8 +50,8 @@ please install a supported one:
 
 all_screencap() {
   case `uname` in
-  Darwin) darwin_screencap $1 ;;
-  Linux) linux_screencap $1 ;;
+  Darwin) darwin_screencap "$1" ;;
+  Linux) linux_screencap "$1" ;;
   *) die "screencap not implemented for "`uname` ;;
   esac
 }

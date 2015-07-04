@@ -94,7 +94,7 @@ log " $dir\n"
 
 log "copying url to clipboard... "
 out="http://gateway.ipfs.io/ipfs/$dir/$name"
-echo "$out" | "$clicopy"
+echo "$out" | $clicopy
 log "copied\n"
 echo "$out"
 

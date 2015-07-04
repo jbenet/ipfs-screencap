@@ -1,11 +1,15 @@
 #!/bin/sh
 
-set -e
-set -o pipefail
+USAGE="usage: $0 - take a screenshot and output to stdout, portably"
 
 usage() {
-  echo "$0 - take a screenshot and output to stdout, portably"
+  echo "$USAGE"
   exit 0
+}
+
+die() {
+  echo >&2 "error: $@"
+  exit 1
 }
 
 # get user options
@@ -15,30 +19,27 @@ while [ $# -gt 0 ]; do
   shift
 
   case "$arg" in
-  -h) usage ;;
-  --help) usage ;;
+  -h|--help) usage ;;
   --*)
-    die "unrecognised option: '$arg'\n$usage" ;;
+    die "unrecognised option: '$arg'\n$USAGE" ;;
   *)
-    die "unrecognised argument" ;;
+    die "$0 accepts no arguments\n$USAGE" ;;
   esac
 done
-
-die() {
-  echo >&2 "error: $@"
-  exit 1
-}
 
 darwin_screencap() {
   screencapture -i "$1"
 }
 
 linux_screencap() {
-  if [ `which import` ]; then
+  if type import >/dev/null
+  then
     import "$1"
-  elif [ `which shutter` ]; then
+  elif type shutter >/dev/null
+  then
     shutter -e -o "$1"
-  elif [ `which scrot` ]; then
+  elif type scrot >/dev/null
+  then
     scrot "$1"
   else
     die "cannot find a supported screen capture tool
@@ -50,15 +51,15 @@ please install a supported one:
 }
 
 all_screencap() {
-  case `uname` in
-  Darwin) darwin_screencap $1 ;;
-  Linux) linux_screencap $1 ;;
-  *) die "screencap not implemented for "`uname` ;;
+  case $(uname) in
+  Darwin) darwin_screencap "$1" ;;
+  Linux) linux_screencap "$1" ;;
+  *) die "screencap not implemented for $(uname)" ;;
   esac
 }
 
 date=$(date +"%Y-%m-%dT%H:%M:%SZ")
-fpath=$(mktemp /tmp/screencap.$date.XXXXXX.png)
-all_screencap $fpath
+fpath=$(mktemp "/tmp/screencap.$date.XXXXXX.png")
+all_screencap "$fpath" || die "capture failed"
 cat "$fpath"
 rm "$fpath" || true

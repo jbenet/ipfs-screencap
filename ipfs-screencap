@@ -14,10 +14,10 @@ Linux)
   ;;
 *) ;;
 esac
+USAGE="usage: $0 [-v] [<name>]\npublish a screenshot to ipfs."
 
 usage() {
-  echo "$0 [-v] [<name>]"
-  echo "publish screenshot to ipfs."
+  echo "$USAGE"
   exit 0
 }
 
@@ -60,12 +60,12 @@ while [ $# -gt 0 ]; do
   -v) verbose=1 ;;
   --verbose) verbose=1 ;;
   --*)
-    die "unrecognised option: '$arg'\n$usage" ;;
+    die "unrecognised option: '$arg'\n$USAGE" ;;
   *)
     if [ "$name" == "" ]; then
       name="$arg"
     else
-      die "too many arguments"
+      die "too many arguments\n$USAGE"
     fi
     ;;
   esac

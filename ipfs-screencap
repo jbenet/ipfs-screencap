@@ -42,6 +42,7 @@ while [ $# -gt 0 ]; do
   case "$arg" in
   -h|--help) usage ;;
   -v|--verbose) verbose=1 ;;
+  -p|--preload) preload=1 ;;
   --*) die "unrecognised option: '$arg'\n$USAGE" ;;
   *)
     if [ "$name" == "" ]; then
@@ -80,5 +81,7 @@ echo "$out" | $clicopy
 log "copied\n"
 echo "$out"
 
-log "preloading on the gateways..."
-(curl "$out" 2>/dev/null >/dev/null && log " ok\n") || (true && log " n/a\n")
+if [ $preload ]; then
+  log "preloading on the gateways..."
+  (curl "$out" 2>/dev/null >/dev/null && log " ok\n") || (true && log " n/a\n")
+fi

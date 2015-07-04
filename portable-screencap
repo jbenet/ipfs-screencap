@@ -1,8 +1,5 @@
 #!/bin/sh
 
-set -e
-set -o pipefail
-
 usage() {
   echo "$0 - take a screenshot and output to stdout, portably"
   exit 0

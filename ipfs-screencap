@@ -40,12 +40,9 @@ while [ $# -gt 0 ]; do
   shift
 
   case "$arg" in
-  -h) usage ;;
-  --help) usage ;;
-  -v) verbose=1 ;;
-  --verbose) verbose=1 ;;
-  --*)
-    die "unrecognised option: '$arg'\n$USAGE" ;;
+  -h|--help) usage ;;
+  -v|--verbose) verbose=1 ;;
+  --*) die "unrecognised option: '$arg'\n$USAGE" ;;
   *)
     if [ "$name" == "" ]; then
       name="$arg"

@@ -17,8 +17,7 @@ while [ $# -gt 0 ]; do
   shift
 
   case "$arg" in
-  -h) usage ;;
-  --help) usage ;;
+  -h|--help) usage ;;
   --*)
     die "unrecognised option: '$arg'\n$usage" ;;
   *)

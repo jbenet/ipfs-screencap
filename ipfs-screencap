@@ -2,18 +2,6 @@
 set -e
 set -o pipefail
 
-# todo: make this cross-platform
-case `uname` in
-Darwin)
-  clicopy="pbcopy"
-  clipaste="pbpaste"
-  ;;
-Linux)
-  clicopy="xsel -i"
-  clipaste="xsel -o"
-  ;;
-*) ;;
-esac
 USAGE="usage: $0 [-v] [<name>]\npublish a screenshot to ipfs."
 
 usage() {
@@ -32,21 +20,18 @@ log() {
   fi
 }
 
-screencapture() {
-
-  case `uname` in
-  Darwin)
-    fpath=$(mktemp /tmp/screencap.XXXXXX.png)
-    screencapture -i "$fpath"
-    cat "$fpath" >3
-    ;;
-  Linux)
-
-    ;;
-  *) die "screencapture not implemented for "`uname` ;;
-  esac
-
-}
+# todo: make this cross-platform
+case $(uname) in
+Darwin)
+  clicopy="pbcopy"
+  clipaste="pbpaste"
+  ;;
+Linux)
+  clicopy="xsel -i"
+  clipaste="xsel -o"
+  ;;
+*) ;;
+esac
 
 # get user options
 while [ $# -gt 0 ]; do

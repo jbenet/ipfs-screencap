@@ -1,0 +1,102 @@
+#!/bin/sh
+set -e
+set -o pipefail
+
+# todo: make this cross-platform
+case `uname` in
+Darwin)
+  clicopy="pbcopy"
+  clipaste="pbpaste"
+  ;;
+Linux)
+  clicopy="xsel -i"
+  clipaste="xsel -o"
+  ;;
+*) ;;
+esac
+
+usage() {
+  echo "$0 [-v] [<name>]"
+  echo "publish screenshot to ipfs."
+  exit 0
+}
+
+die() {
+  echo >&2 "error: $@"
+  exit 1
+}
+
+log() {
+  if [ $verbose ]; then
+    printf >&2 "$@"
+  fi
+}
+
+screencapture() {
+
+  case `uname` in
+  Darwin)
+    fpath=$(mktemp /tmp/screencap.XXXXXX.png)
+    screencapture -i "$fpath"
+    cat "$fpath" >3
+    ;;
+  Linux)
+
+    ;;
+  *) die "screencapture not implemented for "`uname` ;;
+  esac
+
+}
+
+# get user options
+while [ $# -gt 0 ]; do
+  # get options
+  arg="$1"
+  shift
+
+  case "$arg" in
+  -h) usage ;;
+  --help) usage ;;
+  -v) verbose=1 ;;
+  --verbose) verbose=1 ;;
+  --*)
+    die "unrecognised option: '$arg'\n$usage" ;;
+  *)
+    if [ "$name" == "" ]; then
+      name="$arg"
+    else
+      die "too many arguments"
+    fi
+    ;;
+  esac
+done
+
+if [ "$name" == "" ]; then
+  name=screencap.$(date +"%Y-%m-%dT%H:%M:%SZ").png
+fi
+
+log "capturing screen..."
+if [ `which portable-screencap` ]; then
+  img=$(portable-screencap | ipfs add -q)
+elif [ -f "./portable-screencap" ]; then
+  img=$(./portable-screencap | ipfs add -q)
+else
+  die "please install portable-screencap"
+fi
+log " $img\n"
+
+
+log "constructing dir..."
+dir=$(ipfs object new unixfs-dir)
+dir=$(ipfs object patch "$dir" add-link "$name" "$img" )
+pin=$(ipfs pin add -r "$dir")
+log " $dir\n"
+
+log "copying url to clipboard... "
+out="http://gateway.ipfs.io/ipfs/$dir/$name"
+echo "$out" | "$clicopy"
+log "copied\n"
+echo "$out"
+
+log "preloading on the gateways..."
+(curl "$out" 2>/dev/null >/dev/null && log " ok\n") || (true && log " n/a\n")

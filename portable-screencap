@@ -1,0 +1,64 @@
+#!/bin/sh
+
+set -e
+set -o pipefail
+
+usage() {
+  echo "$0 - take a screenshot and output to stdout, portably"
+  exit 0
+}
+
+# get user options
+while [ $# -gt 0 ]; do
+  # get options
+  arg="$1"
+  shift
+
+  case "$arg" in
+  -h) usage ;;
+  --help) usage ;;
+  --*)
+    die "unrecognised option: '$arg'\n$usage" ;;
+  *)
+    die "unrecognised argument" ;;
+  esac
+done
+
+die() {
+  echo >&2 "error: $@"
+  exit 1
+}
+
+darwin_screencap() {
+  screencapture -i "$1"
+}
+
+linux_screencap() {
+  if [ `which import` ]; then
+    import "$1"
+  elif [ `which shutter` ]; then
+    shutter -e -o "$1"
+  elif [ `which scrot` ]; then
+    scrot "$1"
+  else
+    die "cannot find a supported screen capture tool
+please install a supported one:
+    imagemagick
+    shutter
+    scrot"
+  fi
+}
+
+all_screencap() {
+  case `uname` in
+  Darwin) darwin_screencap $1 ;;
+  Linux) linux_screencap $1 ;;
+  *) die "screencap not implemented for "`uname` ;;
+  esac
+}
+
+date=$(date +"%Y-%m-%dT%H:%M:%SZ")
+fpath=$(mktemp /tmp/screencap.$date.XXXXXX.png)
+all_screencap $fpath
+cat "$fpath"
+rm "$fpath" || true

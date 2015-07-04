@@ -2,7 +2,14 @@
 set -e
 set -o pipefail
 
-USAGE="usage: $0 [-v] [<name>]\npublish a screenshot to ipfs."
+USAGE="usage: $0 [OPTIONS] [<name>]
+publish a screenshot to ipfs, copy gateway link to clipboard
+
+Options:
+  -h, --help     - display this help
+  -v, --verbose  - print messages for the actions
+  -p, --preload  - preload url on the gateways
+"
 
 usage() {
   echo "$USAGE"

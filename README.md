@@ -7,7 +7,7 @@
 
 ```sh
 # with ipfs
-ipfs get /ipfs/QmbBFKgqxqNXta7jnh1iRHASEVVtURY4snVC4NHNSbbLy5/ipfs-screencap
+ipfs get /ipfs/QmQgQYuzYRGdhNtfpLRQmL5jJfoxPnSuTzgwUJGjwcDays/ipfs-screencap
 cd ipfs-screencap
 ./install.sh
 

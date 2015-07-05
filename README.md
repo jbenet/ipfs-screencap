@@ -7,7 +7,7 @@
 
 ```sh
 # with ipfs
-ipfs get /ipfs/QmbBFKgqxqNXta7jnh1iRHASEVVtURY4snVC4NHNSbbLy5/ipfs-screencap
+ipfs get /ipfs/QmQgQYuzYRGdhNtfpLRQmL5jJfoxPnSuTzgwUJGjwcDays/ipfs-screencap
 cd ipfs-screencap
 ./install.sh
 
@@ -29,6 +29,21 @@ portable-screencap
 
 Capture screenshots, publish them to [IPFS](http://ipfs.io), and copy the link to the clipboard.
 
+Usage:
+
+```sh
+> ipfs-screencap -h
+USAGE
+  ./ipfs-screencap [OPTIONS] [<name>]
+  publish a screenshot to ipfs, copy gateway link to clipboard
+
+OPTIONS
+  -h, --help     - display this help
+  -v, --verbose  - print messages for the actions
+  -p, --preload  - preload url on the gateways
+  -c, --copy     - copy url to clipboard
+```
+
 Examples:
 ```sh
 # default name based on date
@@ -37,6 +52,10 @@ http://gateway.ipfs.io/ipfs/QmfV9gpmi9yT4J4fWWJH2xdrAUYbmn3JYZPWCN5hsMnA9A/scree
 
 # name argument
 > ipfs-screencap laser-raptor.png
+http://gateway.ipfs.io/ipfs/QmdCcY49eXipYJQpZL2yAuu2Jv8QbddJE2Zub3cfwc3aPz/laser-raptor.png
+
+# copy to clipboard
+> ipfs-screencap -c laser-raptor.png
 http://gateway.ipfs.io/ipfs/QmdCcY49eXipYJQpZL2yAuu2Jv8QbddJE2Zub3cfwc3aPz/laser-raptor.png
 
 # verbose

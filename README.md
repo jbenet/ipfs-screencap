@@ -29,6 +29,21 @@ portable-screencap
 
 Capture screenshots, publish them to [IPFS](http://ipfs.io), and copy the link to the clipboard.
 
+Usage:
+
+```sh
+> ipfs-screencap -h
+USAGE
+  ./ipfs-screencap [OPTIONS] [<name>]
+  publish a screenshot to ipfs, copy gateway link to clipboard
+
+OPTIONS
+  -h, --help     - display this help
+  -v, --verbose  - print messages for the actions
+  -p, --preload  - preload url on the gateways
+  -c, --copy     - copy url to clipboard
+```
+
 Examples:
 ```sh
 # default name based on date

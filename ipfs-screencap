@@ -3,13 +3,15 @@
 set -e
 set -o pipefail
 
-USAGE="usage: $0 [OPTIONS] [<name>]
-publish a screenshot to ipfs, copy gateway link to clipboard
+USAGE="USAGE
+	$0 [OPTIONS] [<name>]
+	publish a screenshot to ipfs, copy gateway link to clipboard
 
-Options:
-  -h, --help     - display this help
-  -v, --verbose  - print messages for the actions
-  -p, --preload  - preload url on the gateways
+OPTIONS
+	-h, --help     - display this help
+	-v, --verbose  - print messages for the actions
+	-p, --preload  - preload url on the gateways
+	-c, --copy     - copy url to clipboard
 "
 
 usage() {
@@ -51,6 +53,7 @@ while [ $# -gt 0 ]; do
   -h|--help) usage ;;
   -v|--verbose) verbose=1 ;;
   -p|--preload) preload=1 ;;
+  -c|--copy) copyopt=1 ;;
   --*) die "unrecognised option: '$arg'\n$USAGE" ;;
   *)
     if [ "$name" == "" ]; then
@@ -83,11 +86,14 @@ dir=$(ipfs object patch "$dir" add-link "$name" "$img" )
 pin=$(ipfs pin add -r "$dir")
 log " $dir\n"
 
-log "copying url to clipboard... "
 out="http://gateway.ipfs.io/ipfs/$dir/$name"
-echo "$out" | $clicopy
-log "copied\n"
 echo "$out"
+
+if [ $copyopt ]; then
+  log "copying url to clipboard... "
+  echo "$out" | $clicopy
+  log "copied\n"
+fi
 
 if [ $preload ]; then
   log "preloading on the gateways..."

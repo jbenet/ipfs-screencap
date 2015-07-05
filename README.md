@@ -39,6 +39,10 @@ http://gateway.ipfs.io/ipfs/QmfV9gpmi9yT4J4fWWJH2xdrAUYbmn3JYZPWCN5hsMnA9A/scree
 > ipfs-screencap laser-raptor.png
 http://gateway.ipfs.io/ipfs/QmdCcY49eXipYJQpZL2yAuu2Jv8QbddJE2Zub3cfwc3aPz/laser-raptor.png
 
+# copy to clipboard
+> ipfs-screencap -c laser-raptor.png
+http://gateway.ipfs.io/ipfs/QmdCcY49eXipYJQpZL2yAuu2Jv8QbddJE2Zub3cfwc3aPz/laser-raptor.png
+
 # verbose
 > ipfs-screencap -v hacking-too-much-time.png
 capturing screen... QmRT4WfAYmt6EQmSWLNwjk9TU75ENV3JZum2PtGPq5V63R

@@ -12,6 +12,7 @@ OPTIONS
 	-v, --verbose  - print messages for the actions
 	-p, --preload  - preload url on the gateways
 	-c, --copy     - copy url to clipboard
+	-s, --sound    - play a sound when done (useful with -p -c)
 "
 
 usage() {
@@ -35,10 +36,12 @@ case $(uname) in
 Darwin)
   clicopy="pbcopy"
   clipaste="pbpaste"
+  playsound="afplay /System/Library/Sounds/Ping.aiff"
   ;;
 Linux)
   clicopy="xsel -i"
   clipaste="xsel -o"
+  playsound=echo -e "\007"
   ;;
 *) ;;
 esac
@@ -54,6 +57,7 @@ while [ $# -gt 0 ]; do
   -v|--verbose) verbose=1 ;;
   -p|--preload) preload=1 ;;
   -c|--copy) copyopt=1 ;;
+  -s|--sound) soundopt=1 ;;
   --*) die "unrecognised option: '$arg'\n$USAGE" ;;
   *)
     if [ "$name" == "" ]; then
@@ -98,4 +102,10 @@ fi
 if [ $preload ]; then
   log "preloading on the gateways..."
   (curl "$out" 2>/dev/null >/dev/null && log " ok\n") || (true && log " n/a\n")
+fi
+
+if [ $soundopt ]; then
+  log "playing sound..."
+  eval $playsound
+  log "ping\n"
 fi

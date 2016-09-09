@@ -90,7 +90,7 @@ dir=$(ipfs object patch "$dir" add-link "$name" "$img" )
 pin=$(ipfs pin add -r "$dir")
 log " $dir\n"
 
-out="http://gateway.ipfs.io/ipfs/$dir/$name"
+out="https://ipfs.io/ipfs/$dir/$name"
 echo "$out"
 
 if [ $copyopt ]; then

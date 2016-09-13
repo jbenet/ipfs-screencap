@@ -41,7 +41,7 @@ Darwin)
 Linux)
   clicopy="xsel -i"
   clipaste="xsel -o"
-  playsound=echo -e "\007"
+  playsound='echo -e "\007"'
   ;;
 *) ;;
 esac

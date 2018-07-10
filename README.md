@@ -1,8 +1,7 @@
 # ipfs-screencap and portable-screencap
 
 - [`portable-screencap` - take a screencap and output to stdout (portable)](portable-screencap)
-- [`ipfs-screencap` - take a screencap and publish it to [IPFS](https://ipfs.io)](ipfs-screencap)
-
+- [`ipfs-screencap` - take a screencap and publish it to](ipfs-screencap) [IPFS](https://ipfs.io)
 ## Install
 
 ```sh
